@@ -54,8 +54,20 @@ def greedy_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    pass
+    cowsCopy = sorted(cows.items(), key=lambda kv:(kv[1], kv[0]), reverse=True)
+    result = []
+    while (cowsCopy):
+        flight = []
+        totalCost = 0
+        for i in range(len(cowsCopy)):
+            if (totalCost+cowsCopy[i][1]) <= limit:
+                flight.append(cowsCopy[i])
+                totalCost += cowsCopy[i][1]
+        # get flight names
+        result.append([item[0] for item in flight])
+        # remove cows in flight
+        cowsCopy = [item for item in cowsCopy if item not in flight]
+    return result
 
 
 # Problem 2
@@ -79,8 +91,21 @@ def brute_force_cow_transport(cows,limit=10):
     transported on a particular trip and the overall list containing all the
     trips
     """
-    # TODO: Your code here
-    pass
+    result = []
+    min_flights = len(cows) + 1
+    for partition in get_partitions(cows):
+        # check if exists previous viable with minus flight
+        if min_flights > len(partition):
+            # check if viable
+            f_viable = []
+            for i in range(len(partition)):
+                # check flight viability
+                f_viable.append(sum([cows[item] for item in partition[i]])<=limit)
+            if all(f_viable):
+                result = partition
+                min_flights = len(partition)
+
+    return result
 
         
 # Problem 3
@@ -108,10 +133,16 @@ lines to print the result of your problem.
 """
 
 cows = load_cows("ps1_cow_data.txt")
-limit=100
+limit=10
 print(cows)
 
+start = time.time()
 print(greedy_cow_transport(cows, limit))
+end = time.time()
+start2 = time.time()
 print(brute_force_cow_transport(cows, limit))
+end2 = time.time()
 
+print("greedy: " + str(end - start))
+print("brute: " + str(end2 - start2))
 
