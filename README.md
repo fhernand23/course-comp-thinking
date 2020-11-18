@@ -2,7 +2,8 @@
 Course Computational Thinking and Data Sciencie - MITx
 
 ```
-conda create -n course-comp-thinking python=3.8
-conda activate course-comp-thinking
+conda create -n course-edx python=3.7
+conda activate course-edx
+pip install matplotlib
 ```
 

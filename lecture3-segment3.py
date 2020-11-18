@@ -155,26 +155,6 @@ def shortestPath(graph, start, end, toPrint = False):
     return BFS(graph, start, end, toPrint)
     
 testSP('Boston', 'Phoenix')
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
 #def cost(path):
 #    result = 0
@@ -227,3 +207,32 @@ testSP('Boston', 'Phoenix')
 #    print('Shortest path found by BFS:', printPath(sp))
 #    
 #testSP()
+
+def buildGraph1(graphType):
+    g = graphType()
+    g.addNode(Node("ABC")) # nodes[0]
+    g.addNode(Node("ACB")) # nodes[1]
+    g.addNode(Node("BAC")) # nodes[2]
+    g.addNode(Node("BCA")) # nodes[3]
+    g.addNode(Node("CAB")) # nodes[4]
+    g.addNode(Node("CBA")) # nodes[5]
+
+    g.addEdge(Edge(g.getNode('ABC'), g.getNode('BAC')))
+    g.addEdge(Edge(g.getNode('ABC'), g.getNode('ACB')))
+    g.addEdge(Edge(g.getNode('BAC'), g.getNode('BCA')))
+    g.addEdge(Edge(g.getNode('BCA'), g.getNode('CBA')))
+    g.addEdge(Edge(g.getNode('ACB'), g.getNode('CAB')))
+    g.addEdge(Edge(g.getNode('CAB'), g.getNode('CBA')))
+    return g
+
+
+def testDfs1(source, destination):
+    g = buildGraph1(Digraph)
+    dfs = DFS(g, g.getNode(source), g.getNode(destination),
+                      [], None, toPrint = True)
+    if dfs != None:
+        print(printPath(dfs))
+    else:
+        print('There is no path from', source, 'to', destination)
+
+testDfs1('ABC', 'CAB')
